@@ -135,3 +135,13 @@ input{
   padding-top: 20px;
   border-radius: 5px;
 }
+
+.delete_button{
+  width: 70px;
+  color: white;
+  border: none;
+  background-color: rgb(241, 63, 63);
+  margin-bottom: 20px;
+  margin-left: 20px;
+  border-radius: 5px;
+}

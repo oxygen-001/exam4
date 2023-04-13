@@ -8,9 +8,9 @@ const type = document.querySelector("#type");
 const price = document.querySelector("#price");
 let values = [];
 
-document.querySelector('.logOutButton').addEventListener('click',()=>{
-    window.location.replace("../index.html");
-})
+document.querySelector(".logOutButton").addEventListener("click", () => {
+  window.location.replace("../index.html");
+});
 
 closeItem.addEventListener("click", (e) => {
   document.querySelector(".Formodal").style.transform = "translateY(-200%)";
@@ -73,12 +73,12 @@ function getAllBooks() {
     })
     .catch((err) => {})
     .finally(() => {
-        renderBookElements()
+      renderBookElements();
     });
 }
 
 function renderBookElements() {
-  let result = values.map((item) => {
+  let result = values.map((item,index) => {
     let result = `
         <div class="AdminCard">
         <div class="forRelative">
@@ -91,7 +91,9 @@ function renderBookElements() {
             <div class="price">
                 <p class="price_text">$${item.price}</p>
                 <img src="./img/f.svg" alt="photo">
-            </div>
+                </div>
+                <button onclick="deleteBookItem(${index})" class="delete_button">Delete</button>
+          
     </div>`;
 
     return result;
@@ -103,6 +105,25 @@ function renderBookElements() {
 
 getAllBooks();
 
+function deleteBookItem(id) {
+  let findedElement = values.find((item, index) => index === id);
 
+  fetch(
+    `https://exam1-2a2f0-default-rtdb.firebaseio.com/cards/${findedElement.id}.json`,
+    {
+      method: "DELETE",
+    }
+  )
+    .then((res) => {
+      if (!res.ok) throw new Error("something wrong : ");
 
+      return res.json();
+    })
+    .then((res) => {
+      console.log("malumot ochdi");
 
+      getAllBooks();
+    })
+    .catch((err) => {})
+    .finally(() => {});
+}
